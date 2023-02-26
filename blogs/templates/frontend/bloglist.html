@@ -1,0 +1,126 @@
+{% extends "frontend/layout.html" %}
+
+{% block title %}
+    บทความทั้งหมด
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <nav class="navbar navbar-light bg-light justify-content-end">
+        <form class="form-inline" method="GET" action="{%url 'search' %}">
+            
+          <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search" name="search" id="search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">ค้นหา</button>
+        </form>
+      </nav>
+        <h4 class="mt-4">บทความทั้งหมด</h4>
+        {% for blog in page_obj %}
+        <div class="card mb-3" >
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="{{blog.cover_img.url}}" alt="..." class="bd-placeholder-img card-img-top img-fluid">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h4 class="card-title text-truncate">{{blog.title}}</h4>
+                  <p class="card-text text-truncate">{{blog.description}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <p class="text-muted">{{blog.date.date}}</p>
+                    <p class="text-muted"><i class="fa fa-eye pl-2"></i>  {{blog.view}}</p>
+                 </div>
+                </div>
+              </div>
+            </div>
+            <a href="{%url 'blogdetail' blog.id %}" class=" stretched-link "></a>
+          </div>
+        {% endfor %}
+        
+        <!--แบบเลขหน้าคงที่คงที่-->
+      <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+                </li>
+              {% endif %}
+              {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                  <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                      {{ i }}
+                      <span class="sr-only">(current)</span>
+                    </span>
+                  </li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+
+
+<!--แบบขยับตามจำนวนหน้า-->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end">
+  {% if page_obj.has_previous %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    </li>
+  {% else %}
+      <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+    </li>
+  {% endif %}
+
+  {% if page_obj.number|add:'-4' > 1 %}  <!--ตรวจสอบว่าหมายเลขหน้าปัจจุบันลบ 4 มากกว่า 1 หรือไม่  สร้าง (...) ลิ้งไปที่หน้า 5-->
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+  {% endif %}
+
+  {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+          <li class="page-item active" aria-current="page">
+        <span class="page-link">
+          {{ i }}
+          <span class="sr-only">(current)</span>
+        </span>
+      </li>
+      {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+           <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+  {% endfor %}
+
+  {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+     <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+  {% endif %}
+
+  {% if page_obj.has_next %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+    </li>
+  {% else %}
+      <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+    </li>
+  {% endif %}
+</ul>
+</nav>
+
+   
+
+
+{% endblock %}
+
+

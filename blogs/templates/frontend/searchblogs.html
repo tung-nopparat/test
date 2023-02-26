@@ -1,0 +1,84 @@
+{% extends "frontend/layout.html" %}
+
+{% block title %}
+    
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav class="navbar navbar-light bg-light justify-content-end">
+        <form class="form-inline" method="GET" action="{%url 'search' %}">
+            
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search" >
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </nav>
+      <h4 class="mt-4"></h4>
+      {% for blog in blogs %}
+      <div class="card mb-3" >
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="{{blog.cover_img.url}}" alt="..." class="bd-placeholder-img card-img-top img-fluid">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h4 class="card-title text-truncate">{{blog.title}}</h4>
+                <p class="card-text text-truncate">{{blog.description}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="text-muted">{{blog.date.date}}</p>
+                  <p class="text-muted"><i class="fa fa-eye pl-2"></i>  {{blog.view}}</p>
+               </div>
+              </div>
+            </div>
+          </div>
+          <a href="{%url 'blogdetail' blog.id %}" class=" stretched-link "></a>
+        </div>
+      {% endfor %}
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+        {% if blogs.has_previous %}
+            <li class="page-item">
+            <a class="page-link" href="?page={{ blogs.previous_page_number }}&search={{search}}">Previous</a>
+          </li>
+        {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+          </li>
+        {% endif %}
+      
+        {% if blogs.number|add:'-4' > 1 %}  
+            <li class="page-item"><a class="page-link" href="?page={{ blogs.number|add:'-5' }}&search={{search}}">&hellip;</a></li>
+        {% endif %}
+      
+        {% for i in blogs.paginator.page_range %}
+            {% if blogs.number == i %}
+                <li class="page-item active" aria-current="page">
+              <span class="page-link">
+                {{ i }}
+                <span class="sr-only">(current)</span>
+              </span>
+            </li>
+            {% elif i > blogs.number|add:'-5' and i < blogs.number|add:'5' %}
+                 <li class="page-item"><a class="page-link" href="?page={{ i }}&search={{search}}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+      
+        {% if blogs.paginator.num_pages > blogs.number|add:'4' %}
+           <li class="page-item"><a class="page-link" href="?page={{ blogs.number|add:'5' }}&search={{search}}">&hellip;</a></li>
+        {% endif %}
+      
+        {% if blogs.has_next %}
+            <li class="page-item">
+            <a class="page-link" href="?page={{ blogs.next_page_number }}&search={{search}}">Next</a>
+          </li>
+        {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+          </li>
+        {% endif %}
+      </ul>
+      </nav>
+</div>
+
+
+{% endblock %}

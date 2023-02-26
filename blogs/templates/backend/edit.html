@@ -1,0 +1,104 @@
+{% extends "backend/layout.html"%}
+
+
+{% block title%}
+    <title>หน้าแรก</title>
+    
+{% endblock %}
+
+
+{% block content %}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">แก้ไขบทความ</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <!-- DataTales Example -->
+                                <div class="card-body">
+                                    <form action="{%url 'updatedata' blog.id %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">หัวข้อ</label>
+                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="title" value="{{blog.title}}">
+                                            <small id="emailHelp" class="form-text text-muted">การตั้งหัวข้อควรตั้งไม่เกิน 256 ตัวอักษร</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">เกี่ยวกับบทความ</label>
+                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="description" value="{{blog.description}}">
+                                            <small id="emailHelp" class="form-text text-muted">การตั้งควรตั้งไม่เกิน 256 ตัวอักษร</small>
+                                        </div>
+                                        <div class=" mb-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="inputGroupFileAddon01">รูปภาพหน้าปก</span>
+                                                </div>
+                                                <div class="custom-file">
+                                                  <input type="file" class="custom-file-input" id="inputGroupFile01" name="cover_img"  aria-describedby="inputGroupFileAddon01">
+                                                  <label class="custom-file-label" for="inputGroupFile01">เลือก...</label>                                                  
+                                                </div>
+                                            </div>
+                                            <small class="form-text text-muted">ขนาดรูปภาพหน้าปกแนะนำ 1600 x 900 pixel </small>  
+                                            <div class="text-center"><img src="{{blog.cover_img.url}}" alt="" style="width: 500px; height: 300px;"></div> 
+                                        </div>
+                                                                               
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">หมวดหมู่</label>
+                                            <select class="form-control" id="exampleFormControlSelect1" name="category">
+                                            <option value="{{blog.category}}">{{blog.category}}"</option>
+                                            <option value="ท่องเที่ยว">ท่องเที่ยว</option>
+                                            <option value="อาหาร">อาหาร</option>
+                                            <option value="เทคโนโลยี">เทคโนโลยี</option>
+                                            <option value="สารคดี">สารคดี</option>
+                                            <option value="etc.">อื่น ๆ</option>
+                                            </select>
+                                        </div>                                
+                                        <script src="//cdn.ckeditor.com/4.20.1/full/ckeditor.js"></script>
+                                        <div class="form-group">
+                                            <textarea type="text" name="blog_content"  rows="5" class="form-control" placeholder="เนื้อหาบทความ">{{blog.blog_content}}</textarea>
+                                        </div>
+                                        <script>
+                                            CKEDITOR.replace('blog_content',{
+                                            language: 'th',
+                                            removeButtons: 'PasteFromWord'
+                                            })
+                                       
+                                        </script>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">แท็ก</label>
+                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="tag" value="{{blog.tag}}">
+                                            <small id="emailHelp" class="form-text text-muted">เช่น #ท่องเที่ยว #อาหาร</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                
+                                                <input class="form-check-input" type="checkbox"  id="defaultCheck1" name="publish" >
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                
+                                                    บันทึกเป็นแบบร่าง
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <hr class="divider">
+                                        <div class="d-sm-flex text-center align-items-center justify-content-between">
+                                            <button type="submit" class="btn btn-primary ">ตกลง</button>
+                                            <button type="button" class="btn btn-secondary">ยกเลิก</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+{% endblock %}

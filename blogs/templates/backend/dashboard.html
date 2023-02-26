@@ -1,0 +1,174 @@
+{% extends "backend/layout.html"%}
+
+{% block title%}
+<title>หน้าแรก</title>
+{% endblock %}
+
+
+
+{% block content %}
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">แดชบอร์ด</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> ดาวน์โหลดรายงาน</a>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                บทความทั้งหมด</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{total_blog}}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-file-lines fa-2x text-primary"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                จำนวนการอ่านบทความ (ครั้ง)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{total_view.view__sum}}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-eye fa-2x text-success"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">เรตติ้ง
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{total_rating.rating__avg|floatformat:1 }}</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-warning" role="progressbar"
+                                                            style="width: 70%" aria-valuenow="70" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-star fa-2x text-warning"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                การตอบกลับ</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{total_review}}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-info"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">บทความทั้งหมด</h6>
+                                    <a href="{%url 'add' %}" class="btn btn-primary  pt-2"><i class="fa-solid fa-circle-plus mx-1"></i><span class="mx-1">เขียนบทความ</span></a>
+                                </div>
+                                <!-- Card Body -->
+                    <!-- DataTales Example -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="row" width="35%">หัวข้อ</th>
+                                            <th scope="row" width="20%">รูปภาพหน้าปก</th>
+                                            <th scope="row" width="15%">ยอดเข้าชม</th>
+                                            <th scope="row" width="15%">วันที่</th>
+                                            <th scope="row" class="text-center" width="15%">จัดการ</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="row" width="35%">หัวข้อ</th>
+                                            <th scope="row" width="20%">รูปภาพหน้าปก</th>
+                                            <th scope="row" width="15%">ยอดเข้าชม</th>
+                                            <th scope="row" width="15%">วันที่</th>
+                                            <th scope="row" class="text-center" width="15%">จัดการ</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        {% for blog in blog %}
+                                        <tr>
+                                            <td class="align-middle"><a href="{%url 'blogdetail' blog.id %}">{{blog.title}}</a></td>
+                                            <td class="align-middle text-center"><div class="text-center"><img src="{{blog.cover_img.url}}" alt="" class="img-thumbnail"></div></td>
+                                            <td class="align-middle text-center"><h5 class="text-success">{{blog.view}}</h5></td>
+                                            <td class="align-middle text-center">{{blog.date}}</td>
+                                            <td class="text-center align-middle">
+                                                <a href="{%url 'editdata' blog.id %}" ><button type="button" class="btn btn-warning m-1" data-toggle="tooltip" data-placement="top" title="แก้ไข"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                                                <a href="{%url 'deletedata' blog.id %}"><button type="button" class="btn btn-danger m-1" data-toggle="tooltip" data-placement="top" title="ลบ" onclick="return confirm('คุณต้องการลบข้อมูลใช่หรือไม่ ?')"><i class="fa-solid fa-trash-can"></i></button></a>
+                                             </td>
+                                            
+                                        </tr>
+                                       
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.container-fluid -->
+            
+            
+
+
+{% endblock %}

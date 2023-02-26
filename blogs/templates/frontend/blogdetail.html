@@ -1,0 +1,54 @@
+{% extends "frontend/layout.html" %}
+{%load static %}
+{% block title %}
+    บทความ {{blog.title}}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+    <h2>{{blog.title}}</h2>
+    <img src="{{blog.cover_img.url}}" alt="" srcset="">
+    {{blog.category}}
+    {{blog.blog_content | safe}}
+    {{blog.tag}}
+    {{blog.date}}
+    {{blog.writer}}
+    <br>
+    <br>
+
+    <div class="container">
+    <form action="{%url 'submit_review' blog.id %}" method="post">
+        {% csrf_token %}
+        <h5> writer your Review </h5>
+        <div class="rate">
+            <input type="radio" name="rating" id="rating5" value="5" required /><label for="rating5" title="5">5</label>
+            <input type="radio" name="rating" id="rating4" value="4" required /><label for="rating4" title="4">4</label>
+            <input type="radio" name="rating" id="rating3" value="3" required /><label for="rating3" title="3">3</label>
+            <input type="radio" name="rating" id="rating2" value="2" required /><label for="rating2" title="2">2</label>
+            <input type="radio" name="rating" id="rating1" value="1" required /><label for="rating1" title="1">1</label>
+            
+        </div>
+        <br>
+        Review Title:
+        <input type="text" class="form-control" name="subject">
+        <br>
+        Review:
+        <textarea name="review" rows="4" class="form-control"></textarea>
+        <br>
+        <input type="submit" value="Submit Review" class="btn btn-primary">
+        
+    </div>
+    </form>
+    <br>
+    <h4>Coment & Rating </h4>
+        {% for comment in review %}
+            
+            <h5 style="color: blue;">{{comment.subject}}</h5>
+            <p>Rating : {{comment.rating}}</p>
+            <p>Detail : {{comment.review}}</p>
+            <br>
+        {% endfor %}
+        
+    </div>
+    {% endblock %}
